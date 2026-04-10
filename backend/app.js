@@ -5,12 +5,12 @@ import employessRoutes from "./src/routes/employees.js";
 import providerRoutes from "./src/routes/providers.js";
 import customerRoutes from "./src/routes/customers.js";
 import registerCustomer from  "./src/routes/registerCustomer.js"
-import cookieParser from "cookie-parser";   
+import cookieParser from "cookie-parser";
 
 //Ejecutar express
 const app = express();
 
-app.use(cookieParser());
+app.use(cookieParser())
 
 app.use(express.json());
 

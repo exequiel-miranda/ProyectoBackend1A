@@ -33,21 +33,6 @@ registerCustomerController.register = async (req, res) => {
     //Encriptar la contraseña
     const passwordHash = await bcryptjs.hash(password, 10);
 
-    //Guardamos todo en la base de datos
-    const newCustomer = new customerModel({
-      name,
-      lastName,
-      birthdate,
-      email,
-      password: passwordHash,
-      isVerified,
-      loginAttempts,
-      timeOut,
-    });
-
-    //Guardamos todo en la base de datos
-    await newCustomer.save();
-
     ////////////////////////////////////////////////////////////////////
     //Generamos un código aleatorio
     const verificationCode = crypto.randomBytes(3).toString("hex");
@@ -55,7 +40,17 @@ registerCustomerController.register = async (req, res) => {
     //Generamos un token para guardar el cógigo aleatorio
     const tokenCode = jsonwebtoken.sign(
       //#1- ¿Qué vamos a guardar?
-      { email, verificationCode },
+      {
+        email,
+        verificationCode,
+        name,
+        lastName,
+        birthdate,
+        passwordHash,
+        isVerified,
+        loginAttempts,
+        timeOut,
+      },
       //#2- Secret key
       config.JWT.secret,
       //#3- ¿Cúando expira?
@@ -116,7 +111,17 @@ registerCustomerController.verifyCode = async (req, res) => {
 
     //#3- Ver que código está en el token
     const decoded = jsonwebtoken.verify(token, config.JWT.secret);
-    const { email, verificationCode: storedCode } = decoded;
+    const {
+      email,
+      verificationCode: storedCode,
+      name,
+      lastName,
+      birthdate,
+      passwordHash,
+      isVerified,
+      loginAttempts,
+      timeOut,
+    } = decoded;
 
     //Paso final: comparar el código que el usuario escribe
     //con el código que está en el token
@@ -124,12 +129,27 @@ registerCustomerController.verifyCode = async (req, res) => {
       return res.status(400).json({ message: "Invalid code" });
     }
 
+    //Guardamos todo en la base de datos
+    const newCustomer = new customerModel({
+      name,
+      lastName,
+      birthdate,
+      email,
+      passwordHash,
+      isVerified: true,
+      loginAttempts,
+      timeOut,
+    });
+
+    //Guardamos todo en la base de datos
+    await newCustomer.save();
+
     //si el código está bien, entonces, colocamos el campo
     //"isVerified" en true
     const customer = await customerModel.findOne({ email });
     customer.isVerified = true;
     await customer.save();
-//
+    //
     res.clearCookie("verificationToken");
 
     res.json({ message: "Email verified successfully" });
