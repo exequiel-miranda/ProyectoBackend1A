@@ -129,7 +129,7 @@ registerCustomerController.verifyCode = async (req, res) => {
     const customer = await customerModel.findOne({ email });
     customer.isVerified = true;
     await customer.save();
-
+//
     res.clearCookie("verificationToken");
 
     res.json({ message: "Email verified successfully" });
