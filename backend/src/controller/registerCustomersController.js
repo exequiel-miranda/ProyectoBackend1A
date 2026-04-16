@@ -107,8 +107,6 @@ registerCustomerController.verifyCode = async (req, res) => {
     //#2- Obtener el token de las cookies
     const token = req.cookies.verificationToken;
 
-    console.log(token);
-
     //#3- Ver que código está en el token
     const decoded = jsonwebtoken.verify(token, config.JWT.secret);
     const {
@@ -135,7 +133,7 @@ registerCustomerController.verifyCode = async (req, res) => {
       lastName,
       birthdate,
       email,
-      passwordHash,
+      password: passwordHash,
       isVerified: true,
       loginAttempts,
       timeOut,

@@ -1,17 +1,24 @@
-import express from "express"
-import branchesController from "../controller/branchesController.js";
+import express from "express";
+import {
+  getBranches,
+  insertBranches,
+  deleteBranches,
+  updateBranches,
+} from "../controller/branchesController.js";
 
 //Router() nos ayuda a colocar los métodos
 //que tendrá mi endpoint
 
 const router = express.Router();
 
-router.route("/")
-.get(branchesController.getBranches)
-.post(branchesController.insertBranches)
+router
+  .route("/")
+  .get(getBranches)
+  .post(insertBranches);
 
-router.route("/:id")
-.put(branchesController.updateBranches)
-.delete(branchesController.deleteBranches)
+router
+  .route("/:id")
+  .put(updateBranches)
+  .delete(deleteBranches);
 
 export default router;
