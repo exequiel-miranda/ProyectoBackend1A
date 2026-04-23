@@ -8,6 +8,7 @@ import registerCustomer from  "./src/routes/registerCustomer.js"
 import cookieParser from "cookie-parser";
 import loginCustomers from "./src/routes/loginCustomer.js"
 import logout from "./src/routes/logout.js";
+import recoveryPassword from "./src/routes/recoveryPassword.js";
 
 //Ejecutar express
 const app = express();
@@ -25,5 +26,6 @@ app.use("/api/customers", customerRoutes);
 app.use("/api/registerCustomers", registerCustomer);
 app.use("/api/loginCustomers", loginCustomers);
 app.use("/api/logout", logout );
+app.use("/api/recoveryPassword", recoveryPassword);
 
 export default app;
