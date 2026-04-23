@@ -24,6 +24,6 @@ app.use("/api/providers", providerRoutes);
 app.use("/api/customers", customerRoutes);
 app.use("/api/registerCustomers", registerCustomer);
 app.use("/api/loginCustomers", loginCustomerRoutes);
-app.use("/api/logout", logoutRoutes);
+app.use("/api/logouts", logoutRoutes);
 
 export default app;

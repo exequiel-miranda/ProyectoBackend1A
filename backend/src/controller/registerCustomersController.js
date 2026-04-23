@@ -64,7 +64,6 @@ registerCustomerController.register = async (req, res) => {
     //#1 Transporter -> ¿Quién envía el correo?
     const transporter = nodemailer.createTransport({
       service: "gmail",
-
       auth: {
         user: config.email.user_email,
         pass: config.email.user_password,
