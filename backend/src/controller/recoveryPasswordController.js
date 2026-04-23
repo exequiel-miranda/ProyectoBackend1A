@@ -1,8 +1,10 @@
 import JsonWebToken from "jsonwebtoken";
-import { config } from "../config.js";
+import { config } from "../../config.js";
 import bcryptjs from "bcryptjs";
 import customerModel from "../models/customers.js";
 import HTMLRecoveryEmail from "../utils/sendMailRecovery.js";
+import crypto from "crypto";
+import nodemailer from "nodemailer";
 
 const recoveryPasswordController = {};
 

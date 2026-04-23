@@ -19,3 +19,5 @@ const HTMLRecoveryEmail = (code) => {
     `;
 
     }
+
+export default HTMLRecoveryEmail;
