@@ -10,6 +10,7 @@ import loginCustomers from "./src/routes/loginCustomer.js"
 import logout from "./src/routes/logout.js";
 import recoveryPassword from "./src/routes/recoveryPassword.js";
 import cors from "cors";
+import limiter from "./src/middlewares/limiter.js";
 
 //Ejecutar express
 const app = express();
@@ -22,17 +23,19 @@ app.use(cors({
 
 app.use(cookieParser())
 
+app.use(limiter);
+
 app.use(express.json());
 
 //Creamos los endPoints
-app.use("/api/products", productsRoutes);
-app.use("/api/branches", branchesRoutes);
-app.use("/api/employees", employessRoutes);
-app.use("/api/providers", providerRoutes);
-app.use("/api/customers", customerRoutes);
-app.use("/api/registerCustomers", registerCustomer);
-app.use("/api/loginCustomers", loginCustomers);
-app.use("/api/logout", logout );
-app.use("/api/recoveryPassword", recoveryPassword);
+app.use("/api/products", limiter, productsRoutes);
+app.use("/api/branches", limiter,branchesRoutes);
+app.use("/api/employees", limiter, employessRoutes);
+app.use("/api/providers", limiter, providerRoutes);
+app.use("/api/customers", limiter, customerRoutes);
+app.use("/api/registerCustomers", limiter, registerCustomer);
+app.use("/api/loginCustomers", limiter, loginCustomers);
+app.use("/api/logout", limiter, logout );
+app.use("/api/recoveryPassword", limiter, recoveryPassword);
 
 export default app;
