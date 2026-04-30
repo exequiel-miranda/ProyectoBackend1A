@@ -28,7 +28,7 @@ recoveryPasswordController.requestCode = async (req, res) => {
 
     //Guardar todo en un token
     const token = jsonwebtoken.sign(
-      //#1- ¿Qué vamos a gaurdar?
+      //#1- ¿Qué vamos a gaurdar? payload
       { email, code, userType: "customer", verified: false },
       //#2- Secret key
       config.JWT.secret,
